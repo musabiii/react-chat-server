@@ -18,8 +18,8 @@ function removeUser(id) {
     return null;
 }
 
-function getUsers() {
-    return users.map(el=>el.username);
+function getUsers(chatName) {
+    return users.filter(el=>el.chatName===chatName).map(el=>el.username);
 }
 
 

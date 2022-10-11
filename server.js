@@ -22,7 +22,7 @@ io.on("connection", (socket) => {
     utilUsers.addUser(socket.id, user.username, user.chatName);
 
     socket.join(user.chatName);
-    io.to(user.chatName).emit("updateUsers",utilUsers.getUsers())
+    io.to(user.chatName).emit("updateUsers",utilUsers.getUsers(user.chatName))
     socket.broadcast.to(user.chatName).emit("message", {
       username: "Bot",
       text: `${user.username} join to chat`,
@@ -40,7 +40,7 @@ io.on("connection", (socket) => {
   socket.on("disconnect", (e) => {
     const user = utilUsers.removeUser(socket.id);
     if (user) {
-      io.to(user.chatName).emit("updateUsers",utilUsers.getUsers())
+      io.to(user.chatName).emit("updateUsers",utilUsers.getUsers(user.chatName))
       io.to(user.chatName).emit("message", {
         username: "Bot",
         text: `${user.username} left the chat`,
