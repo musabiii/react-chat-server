@@ -5,6 +5,8 @@ const cors = require("cors");
 const utilUsers = require("./utils/users");
 const moment = require('moment');
 
+const PORT = process.env.PORT || 3001;
+
 const app = express();
 app.use(cors);
 
@@ -65,4 +67,4 @@ io.on("connection", (socket) => {
   });
 });
 
-server.listen(3000, () => console.log("3000 is started"));
+server.listen(PORT, () => console.log(`${PORT} is started`));
