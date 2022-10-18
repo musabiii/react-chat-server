@@ -51,6 +51,18 @@ io.on("connection", (socket) => {
     }
   });
 
+  socket.on("darkmode", (mode) => {
+    const user = utilUsers.getUser(socket.id);
+    if (user) {
+      io.to(user.chatName).emit("darkmodeclient", mode);
+      io.to(user.chatName).emit("message", {
+        username: "Bot",
+        text: `${user.username} switch darkmode`,
+        timestamp: moment().format("LTS"),
+      });
+    }
+  });
+
   socket.on("disconnect", (e) => {
     console.log("disconnect");
     const user = utilUsers.removeUser(socket.id);
