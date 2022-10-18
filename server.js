@@ -3,7 +3,7 @@ const express = require("express");
 const socketio = require("socket.io");
 const cors = require("cors");
 const utilUsers = require("./utils/users");
-const moment = require('moment');
+const moment = require("moment");
 
 const PORT = process.env.PORT || 3001;
 
@@ -13,7 +13,8 @@ app.use(cors);
 const server = createServer(app);
 const io = socketio(server, {
   cors: {
-    origin: "react-chat-client-three.vercel.app",
+    // origin: "react-chat-client-three.vercel.app",
+    origin: "*",
     methods: ["GET", "POST"],
   },
 });
@@ -24,7 +25,7 @@ io.on("connection", (socket) => {
   socket.emit("message", {
     username: "Bot",
     text: `you are Welcome!`,
-    timestamp:moment().format('LTS')
+    timestamp: moment().format("LTS"),
   });
 
   socket.on("join", (user) => {
@@ -36,7 +37,7 @@ io.on("connection", (socket) => {
     socket.broadcast.to(user.chatName).emit("message", {
       username: "Bot",
       text: `${user.username} join to chat`,
-      timestamp:moment().format('LTS')
+      timestamp: moment().format("LTS"),
     });
   });
 
@@ -44,7 +45,7 @@ io.on("connection", (socket) => {
     const user = utilUsers.getUser(socket.id);
     if (user) {
       // const timestamp = moment().calendar();
-      message.timestamp = moment().format('LTS');
+      message.timestamp = moment().format("LTS");
       console.log({ message });
       io.to(user.chatName).emit("message", message);
     }
@@ -61,7 +62,7 @@ io.on("connection", (socket) => {
       io.to(user.chatName).emit("message", {
         username: "Bot",
         text: `${user.username} left the chat`,
-      timestamp:moment().format('LTS')
+        timestamp: moment().format("LTS"),
       });
     }
   });
