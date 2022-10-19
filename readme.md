@@ -22,9 +22,9 @@ create container by docker-compose.yml
 docker-compose up -d
 ```
 
-recreate conteiner with no cash
+recreate container with no cash
 ```bash
-dokcer-compose up --force-recreate
+docker-compose up --force-recreate
 ```
 
 #### description
